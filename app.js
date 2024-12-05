@@ -7,6 +7,10 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
+Book.prototype.toggleReadStatus = function () {
+    this.read = this.read === 'Yes' ? 'No' : 'Yes';
+};
+
 function addBookToLibrary(title, author, pages, read) {
     const newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook); // Add the new book to the array
@@ -28,6 +32,7 @@ function displayLibrary() {
             <p><strong>Pages:</strong> ${book.pages}</p>  
             <p><strong>Read:</strong> ${book.read}</p>
             <button onclick="removeBook(${index})">Remove</button>
+            <button onclick="toggleRead(${index})">Toggle Read</button>
         `;
 
         libraryContainer.appendChild(bookCard); // Adding the details to the book card.
@@ -36,6 +41,13 @@ function displayLibrary() {
 
 function removeBook(index) {
     myLibrary.splice(index, 1); // Remove the book from the array
+    displayLibrary();
+     // Update the display
+}
+
+// Toggle the read status of a book
+function toggleRead(index) {
+    myLibrary[index].toggleReadStatus(); // Call the prototype method
     displayLibrary(); // Update the display
 }
 
